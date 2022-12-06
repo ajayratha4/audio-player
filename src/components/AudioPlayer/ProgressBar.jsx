@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const ProgressBar = ({
   onChange,
@@ -10,13 +10,6 @@ const ProgressBar = ({
   const bufferBar = useRef(null);
   const isDraggingProgress = useRef(0);
   const [, setFirst] = useState(true);
-  const [width, setWidth] = useState({
-    progressBarPosition,
-  });
-
-  useEffect(() => {
-    setWidth((prev) => ({ ...prev, progressBarPosition }));
-  }, [progressBarPosition]);
 
   const handleWindowMouseMove = (event) => {
     if (isDraggingProgress.current) {
@@ -25,10 +18,12 @@ const ProgressBar = ({
       const eventWidth = event.clientX - getBounding.left;
       if (parentWidth > eventWidth && eventWidth > 0) {
         onChange(Math.round((eventWidth * 100) / parentWidth));
-        setWidth((prev) => ({ ...prev, progressBarPosition: eventWidth }));
-        // progressBar.current.style.width = eventWidth + "px";
       }
     }
+  };
+
+  const perTopx = (per) => {
+    return (600 * per) / 100;
   };
 
   const handleProgressBarOnClick = (event) => {
@@ -38,12 +33,6 @@ const ProgressBar = ({
           (event.nativeEvent.offsetX * 100) / parentBar.current.clientWidth
         )
       );
-      setWidth((prev) => ({
-        ...prev,
-        progressBarPosition: event.nativeEvent.offsetX,
-      }));
-
-      // progressBar.current.style.width = event.nativeEvent.offsetX + "px";
     }
   };
 
@@ -80,7 +69,7 @@ const ProgressBar = ({
           onMouseDown={startProgressBar}
           style={{
             position: "absolute",
-            width: width.progressBarPosition + "px",
+            width: perTopx(progressBarPosition) + "px",
             height: "5px",
             backgroundColor: "#ff0000",
             zIndex: 1,
@@ -89,7 +78,7 @@ const ProgressBar = ({
         >
           <div
             style={{
-              left: width.progressBarPosition - 5,
+              left: perTopx(progressBarPosition) - 5,
               position: "absolute",
               backgroundColor: "green",
               cursor: "pointer",
@@ -106,7 +95,7 @@ const ProgressBar = ({
           ref={bufferBar}
           style={{
             position: "absolute",
-            width: bufferBarPosition + "px",
+            width: perTopx(bufferBarPosition) + "px",
             height: "5px",
             backgroundColor: "#535356",
             borderRadius: "10px",

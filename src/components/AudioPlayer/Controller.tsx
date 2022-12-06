@@ -108,33 +108,6 @@ const Controller = ({
           }}
         >
           <Box>
-            {/* <Slider
-              defaultValue={[0, 0]}
-              value={currentPlaybackPercentage}
-              onChange={handlePositionChange}
-              size={matches ? "medium" : "small"}
-              sx={{
-                p: 0,
-                "& 	.MuiSlider-track": {
-                  background: "#aacaef",
-                  border: 0,
-                },
-                "& 	.MuiSlider-rail": {
-                  background:
-                    "linear-gradient(to right, #1875d2, #1875d2, #969696 50%, #969696)",
-                },
-
-                "& .MuiSlider-thumb:last-child": {
-                  display: "none",
-                },
-                "& .MuiSlider-thumb": {
-                  backgroundColor: "#1875d2",
-                },
-                "& .css-14pt78w-MuiSlider-rail": {
-                  opacity: 1,
-                },
-              }}
-            /> */}
             <ProgressBar
               onChange={handlePositionChange}
               progressBarPosition={currentPlaybackPercentage.playbackPercentage}
